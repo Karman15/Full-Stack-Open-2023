@@ -4,7 +4,7 @@ const AnecdoteTitle = () => <h1>Anecdote of the day</h1>
 
 const AnecdoteMostVotesTitle = () => <h1>Anecdote with most votes</h1>
 
-const Button = ({handleClick, text}) => (<button onClick={handleClick}>{text}</button>)
+const Button = ({handleClick, text}) => (< button onClick={handleClick}>{text}</button>)
 
 const DisplayAnecdoteAndVotes = ({anecdotes, selected, votes}) => {
   return (  
