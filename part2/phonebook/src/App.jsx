@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import Notification from './components/Notification'
 import personService from './services/persons'
 
 const App = () => {
@@ -9,6 +10,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [color, setColor] = useState('green')
 
   useEffect(() => {
     personService
@@ -31,6 +34,22 @@ const App = () => {
           .then(returnedPerson => {
             setPersons(persons.map(person => person.id !== returnedPerson.id ? person : returnedPerson))
           })
+          .catch(error => {
+            setColor('red')
+            setErrorMessage(
+              `Information of ${person.name} has already been removed from server`
+            )
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000)
+          })
+        setColor('green')
+        setErrorMessage(
+          `Updated ${newName}'s number to ${newNumber}`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
       }
       setNewName('')
       setNewNumber('')
@@ -43,6 +62,13 @@ const App = () => {
           setNewName('')
           setNewNumber('')
         })
+      setColor('green')
+      setErrorMessage(
+        `Added ${newName}`
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
   }
 
@@ -52,6 +78,13 @@ const App = () => {
       personService
         .del(id)
         .then(() => setPersons(persons.filter(person => person.id !== id)))
+      setColor('green')
+      setErrorMessage(
+        `Deleted ${person.name}`
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
   }
 
@@ -73,6 +106,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} color={color} />
       <Filter filter={filter} handleFilter={handleFilter} />
       <h3>Add a new contact</h3>
       <PersonForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
