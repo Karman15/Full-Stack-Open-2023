@@ -26,7 +26,7 @@ const Display = ({ countries, filter, setFilter }) => {
   } else {
     return (
       <div>
-        {filteredCountries.map(country => <p key={country.name.common}>{country.name.common} <button onClick={() => setFilter(country.name)}>show</button></p>)}
+        {filteredCountries.map(country => <p key={country.name.common}>{country.name.common} <button onClick={() => setFilter(country.name.common)}>show</button></p>)}
       </div>
     )
   }
