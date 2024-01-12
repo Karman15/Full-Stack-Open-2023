@@ -1,3 +1,5 @@
+import Weather from "./Weather";
+
 const Display = ({ countries, filter, setFilter }) => {
   if (filter === '') {
     return (
@@ -21,6 +23,8 @@ const Display = ({ countries, filter, setFilter }) => {
           {Object.values(filteredCountries[0].languages).map(language => <li key={language}>{language}</li>)}
         </ul>
         <img src={filteredCountries[0].flags.png} alt="flag" width="150" />
+        <h2>Weather in {filteredCountries[0].capital[0]}</h2>
+        <Weather capital={filteredCountries[0].capital[0]} />
       </div>
     )
   } else {
