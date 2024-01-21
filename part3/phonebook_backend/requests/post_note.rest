@@ -7,3 +7,11 @@ Content-Type: application/json
   "name": "bla-bla",
   "number": "3298734927"
 }
+###
+PUT http://localhost:3001/api/persons/65ad960f94026e6edb97600c
+Content-Type: application/json
+
+{
+  "name": "hey",
+  "number": "123143"
+}
