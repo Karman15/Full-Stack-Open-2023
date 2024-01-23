@@ -33,8 +33,15 @@ const App = () => {
           .update(person.id, changedPerson)
           .then(returnedPerson => {
             setPersons(persons.map(person => person.id !== returnedPerson.id ? person : returnedPerson))
+            setColor('green')
+            setErrorMessage(
+              `Updated ${newName}'s number to ${newNumber}`
+            )
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000)
           })
-          .catch(error => {
+          .catch(() => {
             setColor('red')
             setErrorMessage(
               `Information of ${person.name} has already been removed from server`
@@ -43,13 +50,6 @@ const App = () => {
               setErrorMessage(null)
             }, 5000)
           })
-        setColor('green')
-        setErrorMessage(
-          `Updated ${newName}'s number to ${newNumber}`
-        )
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
       }
       setNewName('')
       setNewNumber('')
@@ -61,14 +61,23 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+          setColor('green')
+          setErrorMessage(
+            `Added ${newName}`
+          )
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
         })
-      setColor('green')
-      setErrorMessage(
-        `Added ${newName}`
-      )
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+        .catch(error => {
+          setColor('red')
+          setErrorMessage(
+            error.response.data.error
+          )
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        })
     }
   }
 
